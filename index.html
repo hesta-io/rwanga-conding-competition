@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Additional custom styles can be added here */
+    </style>
+</head>
+
+<body class="h-screen flex flex-col" x-data="data" x-effect="fetchLeaderboard()">
+    <div class="flex-1 flex">
+        <!-- Column 1 -->
+        <div class="w-1/4 bg-blue-200">
+            <!-- Content for Column 1 -->
+            <h1 class="text-3xl font-bold">Column 1</h1>
+            <p>This is the content for column 1.</p>
+
+        </div>
+        <!-- Column 2 -->
+        <div class="w-3/4 bg-white-200">
+            <h1 class="text-3xl font-bold mb-4">Leaderboard</h1>
+
+            <div class="flex flex-1">
+                <div class="w-1/2 p-4">
+                    
+                        <div id="leaderboard-body-1">
+                            <template x-for="item in people1">
+                                <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
+                                    <div class="w-2/12 flex items-center">
+                                        <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
+                                            x-text="item.place">
+                                        </div>
+                                    </div>
+                                    <div class="w-5/12 flex items-center">
+                                        <p class="text-lg" x-text="item.name"></p>
+                                    </div>
+                                    <div class="w-3/12 flex items-center">
+                                        <p class="text-lg" x-text="item.time"></p>
+                                    </div>
+                                    <div class="w-2/12 flex items-center">
+                                        <p class="text-lg font-bold" x-text="item.score"></p>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                </div>
+                <div class="w-1/2 p-4">
+                        <div id="leaderboard-body-2">
+                            <template x-for="item in people2">
+                                <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
+                                    <div class="w-2/12 flex items-center">
+                                        <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
+                                            x-text="item.place">
+                                        </div>
+                                    </div>
+                                    <div class="w-5/12 flex items-center">
+                                        <p class="text-lg" x-text="item.name"></p>
+                                    </div>
+                                    <div class="w-3/12 flex items-center">
+                                        <p class="text-lg" x-text="item.time"></p>
+                                    </div>
+                                    <div class="w-2/12 flex items-center">
+                                        <p class="text-lg font-bold" x-text="item.score"></p>
+                                    </div>
+                                </div>
+                            </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fixed Height Row -->
+    <div class="h-20 bg-red-200">
+        <!-- Content for fixed height row -->
+        <h1 class="text-3xl font-bold">Fixed Height Row</h1>
+        <p>This row has a fixed height.</p>
+    </div>
+
+    <script src="https://unpkg.com/alpinejs@3.12.2/dist/cdn.min.js" defer></script>
+    <script defer>
+        function data() {
+            return {
+                people1: [],
+                people2: [],
+
+                async fetchLeaderboard() {
+                    const people = await fetchLeaderboard();
+
+                    this.people1 = people.slice(0, 8);
+                    this.people2 = people.slice(8);
+                }
+            };
+        };
+
+        async function fetchLeaderboard() {
+            const spreadsheetId = "1SXWYYsveuIpmkZB9hya-SYnKHEeR7_fvHg61GqB7k2c";
+            const range = "Leaderboard!A2:D17";
+            const api_key = "AIzaSyD7GsvzhPMHQcLr1zs1x1M-19pjaGPlvuI";
+
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${api_key}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                const result = data.values.map(row => {
+                    return {
+                        place: row[0],
+                        name: row[1],
+                        time: row[2],
+                        score: row[3]
+                    }
+                });
+
+                return result;
+            } catch (error) {
+                console.error('Error fetching Google Sheet data:', error);
+                throw error;
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
