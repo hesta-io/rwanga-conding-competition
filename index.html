@@ -6,78 +6,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
     <style>
-        /* Additional custom styles can be added here */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
     </style>
 </head>
 
-<body class="h-screen flex flex-col" x-data="data" x-effect="fetchLeaderboard()">
+<body class="h-screen flex flex-col" x-data="data" x-init="init">
     <div class="flex-1 flex">
         <!-- Column 1 -->
-        <div class="w-1/4 bg-blue-200">
-            <!-- Content for Column 1 -->
-            <h1 class="text-3xl font-bold">Column 1</h1>
-            <p>This is the content for column 1.</p>
-
+        <div class="w-1/4 flex flex-1 flex-col" style="background-color: #217ebb; max-width: 500px;">
+            <div style="height: 100px;"></div>
+            <div class="h-100 flex flex-col">
+                <div class="flex">
+                    <div class="mr-12 p-10 bg-white rounded-r-lg">
+                        <img src="./assets/rwanga.png" />
+                        <img src="./assets/hesta.png" class="mt-5" />
+                    </div>
+                </div>
+            </div>
+            <div style="height: 50px;">
+            </div>
+            <div class="flex-grow">
+                <div class="text-white">
+                    <h2 class="text-2xl font-bold mb-4 text-center">Rules</h2>
+                    <ul class="list-disc pl-6">
+                        <li>Solve the questions within the time limit</li>
+                        <li>Don't use ChatGPT, Copilot, or other AI assistants</li>
+                        <li>Don't use Google or other search engines</li>
+                        <li>Solve as many problems as you can</li>
+                        <li>Have fun</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <!-- Column 2 -->
-        <div class="w-3/4 bg-white-200">
-            <h1 class="text-3xl font-bold mb-4">Leaderboard</h1>
+        <div class="w-3/4 p-5" style="background-color: #217ebb;">
+            <div style="height: 80px;"></div>
+            <div>
+                <h1 class="text-5xl mb-4 text-white">Rwanga Coding Competition</h1>
+            </div>
 
             <div class="flex flex-1">
-                <div class="w-1/2 p-4">
-                    
-                        <div id="leaderboard-body-1">
-                            <template x-for="item in people1">
-                                <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
-                                    <div class="w-2/12 flex items-center">
-                                        <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
-                                            x-text="item.place">
-                                        </div>
-                                    </div>
-                                    <div class="w-5/12 flex items-center">
-                                        <p class="text-lg" x-text="item.name"></p>
-                                    </div>
-                                    <div class="w-3/12 flex items-center">
-                                        <p class="text-lg" x-text="item.time"></p>
-                                    </div>
-                                    <div class="w-2/12 flex items-center">
-                                        <p class="text-lg font-bold" x-text="item.score"></p>
+                <div class="w-1/2 pt-4">
+
+                    <div id="leaderboard-body-1">
+                        <template x-for="item in people1">
+                            <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
+                                <div class="w-2/12 flex items-center">
+                                    <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
+                                        x-text="item.place">
                                     </div>
                                 </div>
-                            </template>
-                        </div>
+                                <div class="w-5/12 flex items-center">
+                                    <p class="text-lg" x-text="item.name"></p>
+                                </div>
+                                <div class="w-3/12 flex items-center">
+                                    <p class="text-lg" x-text="item.time"></p>
+                                </div>
+                                <div class="w-2/12 flex items-center">
+                                    <p class="text-lg font-bold" x-text="item.score"></p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
                 </div>
                 <div class="w-1/2 p-4">
-                        <div id="leaderboard-body-2">
-                            <template x-for="item in people2">
-                                <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
-                                    <div class="w-2/12 flex items-center">
-                                        <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
-                                            x-text="item.place">
-                                        </div>
-                                    </div>
-                                    <div class="w-5/12 flex items-center">
-                                        <p class="text-lg" x-text="item.name"></p>
-                                    </div>
-                                    <div class="w-3/12 flex items-center">
-                                        <p class="text-lg" x-text="item.time"></p>
-                                    </div>
-                                    <div class="w-2/12 flex items-center">
-                                        <p class="text-lg font-bold" x-text="item.score"></p>
+                    <div id="leaderboard-body-2">
+                        <template x-for="item in people2">
+                            <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
+                                <div class="w-2/12 flex items-center">
+                                    <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
+                                        x-text="item.place">
                                     </div>
                                 </div>
-                            </template>
+                                <div class="w-5/12 flex items-center">
+                                    <p class="text-lg" x-text="item.name"></p>
+                                </div>
+                                <div class="w-3/12 flex items-center">
+                                    <p class="text-lg" x-text="item.time"></p>
+                                </div>
+                                <div class="w-2/12 flex items-center">
+                                    <p class="text-lg font-bold" x-text="item.score"></p>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Fixed Height Row -->
-    <div class="h-20 bg-red-200">
-        <!-- Content for fixed height row -->
-        <h1 class="text-3xl font-bold">Fixed Height Row</h1>
-        <p>This row has a fixed height.</p>
+    <div class="h-50 bg-white">
+        <img src="assets/footer.png" />
     </div>
 
     <script src="https://unpkg.com/alpinejs@3.12.2/dist/cdn.min.js" defer></script>
@@ -87,11 +111,21 @@
                 people1: [],
                 people2: [],
 
-                async fetchLeaderboard() {
+                async init() {
+                    await this.reload();
+                    this.setupReloadTimer();
+                },
+                async reload() {
                     const people = await fetchLeaderboard();
 
                     this.people1 = people.slice(0, 8);
                     this.people2 = people.slice(8);
+                },
+                setupReloadTimer() {
+                    const seconds = 5;
+                    this.reloadInterval = setInterval(async () => {
+                        await this.reload();
+                    }, seconds * 1000);
                 }
             };
         };
