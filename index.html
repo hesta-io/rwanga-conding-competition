@@ -57,7 +57,7 @@
                         <template x-for="item in people1">
                             <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
                                 <div class="w-2/12 flex items-center">
-                                    <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
+                                    <div :class="item.color" class="h-12 w-12 flex items-center justify-center text-white font-bold text-xl rounded-full"
                                         x-text="item.place">
                                     </div>
                                 </div>
@@ -146,7 +146,11 @@
                         place: row[0],
                         name: row[1],
                         time: row[2],
-                        score: row[3]
+                        score: row[3],
+                        color: row[0] == 1 ? 'bg-yellow-500' :
+                               row[0] == 2 ? 'bg-gray-400' :
+                               row[0] == 3 ? 'bg-red-900' :
+                               'bg-blue-500',
                     }
                 });
 
