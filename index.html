@@ -118,7 +118,6 @@
 
         .table {
             width: 100%;
-            /* border: 1px solid #fff; */
         }
 
         .table th {
@@ -126,13 +125,8 @@
             font-weight: bold;
             color: #fff;
             text-align: start;
-            /* background-color: #fff; */
             border-bottom: 1px solid #fff;
         }
-
-        /* thead {
-            border: 1px solid #fff;
-        } */
 
         .table td {
             padding: 10px;
@@ -141,6 +135,20 @@
 
         .lambda {
             color: #ff5f57;
+        }
+
+        .flash {
+            animation: flash 1s;
+        }
+
+        @keyframes flash {
+            0% {
+                background-color: magenta;
+            }
+
+            100% {
+                background-color: white;
+            }
         }
     </style>
 </head>
@@ -203,7 +211,7 @@
                                 <tbody>
                                     <template x-for="person in people1">
                                         <tr>
-                                            <td :style="`color: ${person.color}`" x-text="person.place"></td>
+                                            <td :class="{ 'flash': person.flash }" :style="`color: ${person.color}`" x-text="person.place"></td>
                                             <td :style="`color: ${person.color}`" x-text="person.name"></td>
                                             <td :style="`color: ${person.color}`" x-text="person.time"></td>
                                             <td :style="`color: ${person.color}`" x-text="person.score"></td>
@@ -223,7 +231,7 @@
                                 <tbody>
                                     <template x-for="person in people2">
                                         <tr>
-                                            <td x-text="person.place"></td>
+                                            <td :class="{ 'flash': person.flash }" x-text="person.place"></td>
                                             <td x-text="person.name"></td>
                                             <td x-text="person.time"></td>
                                             <td x-text="person.score"></td>
@@ -258,8 +266,27 @@
                 async reload() {
                     const people = await fetchLeaderboard();
 
+                    const old1 = [...this.people1];
+                    const old2 = [...this.people2];
+
                     this.people1 = people.slice(0, 8);
                     this.people2 = people.slice(8);
+
+                    for (i = 0; i < this.people1.length && i < old1.length; i++) {
+                        if (old1[i].name != this.people1[i].name ||
+                            old1[i].score != this.people1[i].score) {
+                                this.people1[i].flash = true;
+                                setTimeout(() => this.people1[i].flash = false, 1000);
+                        }
+                    }
+
+                    for (i = 0; i < this.people2.length && i < old2.length; i++) {
+                        if (old2[i].name != this.people2[i].name ||
+                            old2[i].score != this.people2[i].score) {
+                                this.people2[i].flash = true;
+                                setTimeout(() => this.people2[i].flash = false, 1000);
+                        }
+                    }
                 },
                 setupReloadTimer() {
                     const seconds = 5;
