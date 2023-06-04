@@ -19,7 +19,7 @@
     <div class="flex-1 flex">
         <!-- Column 1 -->
         <div class="w-1/4 flex flex-1 flex-col" style="background-color: #217ebb; max-width: 500px;">
-            <div style="height: 100px;"></div>
+            <div style="height: 10vh"></div>
             <div class="h-100 flex flex-col">
                 <div class="flex">
                     <div class="mr-12 p-10 bg-white rounded-r-lg">
@@ -45,55 +45,89 @@
         </div>
         <!-- Column 2 -->
         <div class="w-3/4 p-5" style="background-color: #217ebb;">
-            <div style="height: 80px;"></div>
+            <div style="height: 6vh"></div>
             <div>
-                <h1 class="text-5xl mb-4 text-white">Rwanga Coding Competition</h1>
+                <h1 class="text-5xl mb-4 text-white text-center">Rwanga Coding Competition</h1>
             </div>
 
             <div class="flex flex-1">
                 <div class="w-1/2 pt-4">
 
                     <div id="leaderboard-body-1">
-                        <template x-for="item in people1">
-                            <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
-                                <div class="w-2/12 flex items-center">
-                                    <div :class="item.color" class="h-12 w-12 flex items-center justify-center text-white font-bold text-xl rounded-full"
-                                        x-text="item.place">
+                        <div class="flex items-center bg-gray-800 text-white rounded-t-lg p-2 shadow">
+                            <div class="w-2/12 flex items-center">
+                                
+                            </div>
+                            <div class="w-5/12 flex items-center">
+                                <p class="text-lg font-bold">Name</p>
+                            </div>
+                            <div class="w-3/12 flex items-center">
+                                <p class="text-lg font-bold">Time</p>
+                            </div>
+                            <div class="w-2/12 flex items-center">
+                                <p class="text-lg font-bold">Score</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-b-lg shadow p-2">
+                            <template x-for="item in people1">
+                                <div class="flex items-center p-2 mb-2">
+                                    <div class="w-2/12 flex items-center">
+                                        <div :class="item.color" class="h-12 w-12 flex items-center justify-center text-white font-bold text-xl rounded-full"
+                                            x-text="item.place">
+                                        </div>
+                                    </div>
+                                    <div class="w-5/12 flex items-center">
+                                        <p class="text-lg" x-text="item.name"></p>
+                                    </div>
+                                    <div class="w-3/12 flex items-center">
+                                        <p class="text-lg" x-text="item.time"></p>
+                                    </div>
+                                    <div class="w-2/12 flex items-center">
+                                        <p class="text-lg font-bold" x-text="item.score"></p>
                                     </div>
                                 </div>
-                                <div class="w-5/12 flex items-center">
-                                    <p class="text-lg" x-text="item.name"></p>
-                                </div>
-                                <div class="w-3/12 flex items-center">
-                                    <p class="text-lg" x-text="item.time"></p>
-                                </div>
-                                <div class="w-2/12 flex items-center">
-                                    <p class="text-lg font-bold" x-text="item.score"></p>
-                                </div>
-                            </div>
-                        </template>
+                            </template>
+                        </div>
                     </div>
                 </div>
                 <div class="w-1/2 p-4">
                     <div id="leaderboard-body-2">
-                        <template x-for="item in people2">
-                            <div class="flex items-center bg-white rounded-lg p-2 mb-2 shadow">
-                                <div class="w-2/12 flex items-center">
-                                    <div class="h-12 w-12 bg-blue-500 flex items-center justify-center text-white font-bold text-xl rounded-full"
-                                        x-text="item.place">
+                        <div class="flex items-center bg-gray-800 text-white rounded-t-lg p-2 shadow">
+                            <div class="w-2/12 flex items-center">
+                                
+                            </div>
+                            <div class="w-5/12 flex items-center">
+                                <p class="text-lg font-bold">Name</p>
+                            </div>
+                            <div class="w-3/12 flex items-center">
+                                <p class="text-lg font-bold">Time</p>
+                            </div>
+                            <div class="w-2/12 flex items-center">
+                                <p class="text-lg font-bold">Score</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-b-lg shadow p-2">
+                            <template x-for="item in people2">
+                                <div class="flex items-center p-2 mb-2">
+                                    <div class="w-2/12 flex items-center">
+                                        <div :class="item.color" class="h-12 w-12 flex items-center justify-center text-white font-bold text-xl rounded-full"
+                                            x-text="item.place">
+                                        </div>
+                                    </div>
+                                    <div class="w-5/12 flex items-center">
+                                        <p class="text-lg" x-text="item.name"></p>
+                                    </div>
+                                    <div class="w-3/12 flex items-center">
+                                        <p class="text-lg" x-text="item.time"></p>
+                                    </div>
+                                    <div class="w-2/12 flex items-center">
+                                        <p class="text-lg font-bold" x-text="item.score"></p>
                                     </div>
                                 </div>
-                                <div class="w-5/12 flex items-center">
-                                    <p class="text-lg" x-text="item.name"></p>
-                                </div>
-                                <div class="w-3/12 flex items-center">
-                                    <p class="text-lg" x-text="item.time"></p>
-                                </div>
-                                <div class="w-2/12 flex items-center">
-                                    <p class="text-lg font-bold" x-text="item.score"></p>
-                                </div>
-                            </div>
-                        </template>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,7 +184,7 @@
                         color: row[0] == 1 ? 'bg-yellow-500' :
                                row[0] == 2 ? 'bg-gray-400' :
                                row[0] == 3 ? 'bg-red-900' :
-                               'bg-blue-500',
+                               'bg-blue-500'
                     }
                 });
 
