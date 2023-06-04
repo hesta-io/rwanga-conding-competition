@@ -11,6 +11,137 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+
+            background: #56CCF2;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #2F80ED, #56CCF2);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+        .terminal-window {
+            background-color: #0c0c0c;
+            border-radius: 10px;
+            width: 80%;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
+
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 18px;
+            line-height: 1.4;
+            padding: 20px;
+            display: flex;
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            padding: 0 10px;
+            background-color: #333;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .close-button,
+        .maximize-button,
+        .minimize-button {
+            width: 12px;
+            height: 12px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .close-button {
+            background-color: #ff5f57;
+        }
+
+        .minimize-button {
+            background-color: #ffbd2e;
+        }
+
+        .maximize-button {
+            background-color: #00ff00;
+        }
+
+        .close-button:before,
+        .minimize-button:before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .content {
+            margin-top: 40px;
+        }
+
+        .prompt {
+            color: #00ff00;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        .blink-caret {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .tables-container {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 50px;
+        }
+
+        .table {
+            width: 100%;
+            /* border: 1px solid #fff; */
+        }
+
+        .table th {
+            padding: 10px;
+            font-weight: bold;
+            color: #fff;
+            text-align: start;
+            /* background-color: #fff; */
+            border-bottom: 1px solid #fff;
+        }
+
+        /* thead {
+            border: 1px solid #fff;
+        } */
+
+        .table td {
+            padding: 10px;
+            border-bottom: 1px solid #fff;
+        }
+
+        .lambda {
+            color:#ff5f57;
         }
     </style>
 </head>
@@ -18,11 +149,10 @@
 <body class="h-screen flex flex-col" x-data="data" x-init="init">
     <div class="flex-1 flex">
         <!-- Column 1 -->
-        <div class="w-1/4 flex flex-1 flex-col" style="background-color: #217ebb; max-width: 500px;">
-            <div style="height: 10vh"></div>
-            <div class="h-100 flex flex-col">
+        <div class="w-1/4 flex flex-1 flex-col" style="max-width: 500px;">
+            <div class="h-100 mt-8 flex flex-col">
                 <div class="flex">
-                    <div class="mr-12 p-10 bg-white rounded-r-lg">
+                    <div class="p-10 bg-white rounded-r-lg">
                         <img src="./assets/rwanga.png" />
                         <img src="./assets/hesta.png" class="mt-5" />
                     </div>
@@ -30,103 +160,72 @@
             </div>
             <div style="height: 50px;">
             </div>
-            <div class="flex-grow">
-                <div class="text-white">
-                    <h2 class="text-2xl font-bold mb-4 text-center">Rules</h2>
-                    <ul class="list-disc pl-6">
-                        <li>Solve the questions within the time limit</li>
-                        <li>Don't use ChatGPT, Copilot, or other AI assistants</li>
-                        <li>Don't use Google or other search engines</li>
-                        <li>Solve as many problems as you can</li>
-                        <li>Have fun</li>
-                    </ul>
-                </div>
-            </div>
         </div>
         <!-- Column 2 -->
-        <div class="w-3/4 p-5" style="background-color: #217ebb;">
-            <div style="height: 6vh"></div>
-            <div>
-                <h1 class="text-5xl mb-4 text-white text-center">Rwanga Coding Competition</h1>
-            </div>
+        <div class="w-3/4 p-5">
+            <div class="flex flex-1 mt-3 items-center justify-center">
+                <div class="terminal-window">
+                    <div class="title-bar flex">
+                        <div class="close-button"></div>
+                        <div class="minimize-button"></div>
+                        <div class="maximize-button"></div>
 
-            <div class="flex flex-1">
-                <div class="w-1/2 pt-4">
-
-                    <div id="leaderboard-body-1">
-                        <div class="flex items-center bg-gray-800 text-white rounded-t-lg p-2 shadow">
-                            <div class="w-2/12 flex items-center">
-                                
-                            </div>
-                            <div class="w-5/12 flex items-center">
-                                <p class="text-lg font-bold">Name</p>
-                            </div>
-                            <div class="w-3/12 flex items-center">
-                                <p class="text-lg font-bold">Time</p>
-                            </div>
-                            <div class="w-2/12 flex items-center">
-                                <p class="text-lg font-bold">Score</p>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white rounded-b-lg shadow p-2">
-                            <template x-for="item in people1">
-                                <div class="flex items-center p-2 mb-2">
-                                    <div class="w-2/12 flex items-center">
-                                        <div :class="item.color" class="h-12 w-12 flex items-center justify-center text-white font-bold text-xl rounded-full"
-                                            x-text="item.place">
-                                        </div>
-                                    </div>
-                                    <div class="w-5/12 flex items-center">
-                                        <p class="text-lg" x-text="item.name"></p>
-                                    </div>
-                                    <div class="w-3/12 flex items-center">
-                                        <p class="text-lg" x-text="item.time"></p>
-                                    </div>
-                                    <div class="w-2/12 flex items-center">
-                                        <p class="text-lg font-bold" x-text="item.score"></p>
-                                    </div>
-                                </div>
-                            </template>
-                        </div>
+                        <div class="text-center flex-grow">Rwanga Coding Comptetion</div>
                     </div>
-                </div>
-                <div class="w-1/2 p-4">
-                    <div id="leaderboard-body-2">
-                        <div class="flex items-center bg-gray-800 text-white rounded-t-lg p-2 shadow">
-                            <div class="w-2/12 flex items-center">
-                                
-                            </div>
-                            <div class="w-5/12 flex items-center">
-                                <p class="text-lg font-bold">Name</p>
-                            </div>
-                            <div class="w-3/12 flex items-center">
-                                <p class="text-lg font-bold">Time</p>
-                            </div>
-                            <div class="w-2/12 flex items-center">
-                                <p class="text-lg font-bold">Score</p>
-                            </div>
-                        </div>
+                    <div class="content">
+                        <div class="command prompt mb-3"><span class="lambda">λ</span> cat rules.txt</div>
+                        <ul class="list-disc pl-6 mb-5">
+                            <li>Solve the questions within the time limit</li>
+                            <li>Don't use ChatGPT, Copilot, or other AI assistants</li>
+                            <li>Don't use Google or other search engines</li>
+                            <li>Solve as many problems as you can</li>
+                            <li>Have fun</li>
+                        </ul>
 
-                        <div class="bg-white rounded-b-lg shadow p-2">
-                            <template x-for="item in people2">
-                                <div class="flex items-center p-2 mb-2">
-                                    <div class="w-2/12 flex items-center">
-                                        <div :class="item.color" class="h-12 w-12 flex items-center justify-center text-white font-bold text-xl rounded-full"
-                                            x-text="item.place">
-                                        </div>
-                                    </div>
-                                    <div class="w-5/12 flex items-center">
-                                        <p class="text-lg" x-text="item.name"></p>
-                                    </div>
-                                    <div class="w-3/12 flex items-center">
-                                        <p class="text-lg" x-text="item.time"></p>
-                                    </div>
-                                    <div class="w-2/12 flex items-center">
-                                        <p class="text-lg font-bold" x-text="item.score"></p>
-                                    </div>
-                                </div>
-                            </template>
+                        <div class="command  prompt mb-3"><span class="lambda">λ</span> python ~/scripts/leaderboard.py</div>
+
+                        <div class="tables-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th style="min-width: 200px;">Name</th>
+                                        <th style="min-width: 120px;">Time</th>
+                                        <th style="min-width: 120px;">Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template x-for="person in people1">
+                                        <tr>
+                                            <td x-text="person.place"></td>
+                                            <td x-text="person.name"></td>
+                                            <td x-text="person.time"></td>
+                                            <td x-text="person.score"></td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th style="min-width: 200px;">Name</th>
+                                        <th style="min-width: 120px;">Time</th>
+                                        <th style="min-width: 120px;">Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template x-for="person in people2">
+                                        <tr>
+                                            <td x-text="person.place"></td>
+                                            <td x-text="person.name"></td>
+                                            <td x-text="person.time"></td>
+                                            <td x-text="person.score"></td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                            <div class="command mt-5"><span class="lambda">λ </span><span class="blink-caret">█</span></div>
                         </div>
                     </div>
                 </div>
@@ -182,9 +281,9 @@
                         time: row[2],
                         score: row[3],
                         color: row[0] == 1 ? 'bg-yellow-500' :
-                               row[0] == 2 ? 'bg-gray-400' :
-                               row[0] == 3 ? 'bg-red-900' :
-                               'bg-blue-500'
+                            row[0] == 2 ? 'bg-gray-400' :
+                                row[0] == 3 ? 'bg-red-900' :
+                                    'bg-blue-500'
                     }
                 });
 
