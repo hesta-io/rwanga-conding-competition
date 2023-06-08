@@ -266,13 +266,15 @@
                     this.setupReloadTimer();
                 },
                 async reload() {
-                    const people = await fetchLeaderboard();
+                    const count = 16;
+                    const half = count / 2;
+                    const people = await fetchLeaderboard(count);
 
                     const old1 = [...this.people1];
                     const old2 = [...this.people2];
 
-                    this.people1 = people.slice(0, 8);
-                    this.people2 = people.slice(8);
+                    this.people1 = people.slice(0, half);
+                    this.people2 = people.slice(half);
 
                     for (i = 0; i < this.people1.length && i < old1.length; i++) {
                         if (old1[i].name != this.people1[i].name ||
@@ -299,9 +301,9 @@
             };
         };
 
-        async function fetchLeaderboard() {
+        async function fetchLeaderboard(count) {
             const spreadsheetId = "1SXWYYsveuIpmkZB9hya-SYnKHEeR7_fvHg61GqB7k2c";
-            const range = "Leaderboard!A2:D17";
+            const range = `Leaderboard!A2:D${count + 1}`;
             const api_key = "AIzaSyD7GsvzhPMHQcLr1zs1x1M-19pjaGPlvuI";
 
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${api_key}`;
